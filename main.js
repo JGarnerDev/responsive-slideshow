@@ -9,7 +9,7 @@ var images = [
   "https://i.imgur.com/k0G89LP.png",
 ];
 
-var duration = 3000;
+let timeout;
 
 slideShow.style.backgroundImage = `url(${images[i]})`;
 
@@ -21,9 +21,12 @@ function nextImage() {
   }
   slideShow.style.backgroundImage = `url(${images[i]})`;
   slideShow.classList.add("enter-right");
-  setTimeout(() => {
-    slideShow.classList.remove("enter-right");
-  }, 500);
+  if (timeout) {
+    window.clearTimeout(timeout);
+  }
+  timeout = setTimeout(() => {
+    window.slideShow.classList.remove("enter-right");
+  }, 400);
 }
 
 function prevImage() {
@@ -32,11 +35,16 @@ function prevImage() {
   } else {
     i = images.length - 1;
   }
+
+  if (timeout) {
+    window.clearTimeout(timeout);
+  }
+  timeout = window.setTimeout(() => {
+    slideShow.classList.remove("enter-left");
+  }, 400);
+
   slideShow.style.backgroundImage = `url(${images[i]})`;
   slideShow.classList.add("enter-left");
-  setTimeout(() => {
-    slideShow.classList.remove("enter-left");
-  }, 500);
 }
 
 nextBtn.onclick = () => nextImage();
